@@ -6,12 +6,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
 <script>
-  /* globals Warp10 */
-
-  // Create my namespace, if it doesn't exist
-  if (!window.Warp10) {
-    window.Warp10 = {};
-  }
 
   /**
    * `quantum-module-mixin`
@@ -20,63 +14,63 @@
    * @mixinFunction
    * @polymer
    */
-   Warp10QuantumModuleMixin = Polymer.dedupingMixin((superClass) => class extends superClass {
-     /**
-       * @typedef {{id: string, label: string, url: string, execEndpoint: string, 
+  const Warp10QuantumModuleMixin = Polymer.dedupingMixin((superClass) => class extends superClass {
+    /**
+     * @typedef {{id: string, label: string, url: string, execEndpoint: string,
        *    updateEndpoint: string, deleteEndpoint: string, headerName:string}} Backend
-       */
+     */
 
     /**
-      * Fired when `backend` changes
-      *
-      * @event backend-change
-      * @param {Backend} the backend
-      */
+     * Fired when `backend` changes
+     *
+     * @event backend-change
+     * @param {Backend} the backend
+     */
     /**
-      * Fired when `payload` changes
-      *
-      * @event payload-change
-      * @param {string} the payload
-      */
+     * Fired when `payload` changes
+     *
+     * @event payload-change
+     * @param {string} the payload
+     */
     static get properties() {
       return {
         /**
-          * The module name
-          */
-          name: {
+         * The module name
+         */
+        name: {
           type: String,
         },
         /**
-          * The functional payload of the module (e.g. the warscript payload for the warscript element)
-          */
+         * The functional payload of the module (e.g. the warscript payload for the warscript element)
+         */
         payload: {
           type: String,
           observer: '_payloadChanged',
           notify: true,
         },
         /**
-          * The choosen backend
-          *  The `backend` object is composed of:
-          *
-          *  - `id`: an unique id, a simple string to be used as HTML id
-          *  - `label`: the label to show in the UI
-          *  - `url`: the backend URL
-          *  - `execEndpoint`: the path of the WarpScript execution endpoint 
-          *  - `findEndpoint`: the path of the Find endpoint
-          *  - `updateEndpoint`: the path of the update endpoint
-          *  - `deleteEndpoint`: the path of the delete endpoint
-          *  - `headerName`: the Warp10 header name to add for different operations
-          *
-          *  @type Backend
-          */        
+         * The choosen backend
+         *  The `backend` object is composed of:
+         *
+         *  - `id`: an unique id, a simple string to be used as HTML id
+         *  - `label`: the label to show in the UI
+         *  - `url`: the backend URL
+         *  - `execEndpoint`: the path of the WarpScript execution endpoint
+         *  - `findEndpoint`: the path of the Find endpoint
+         *  - `updateEndpoint`: the path of the update endpoint
+         *  - `deleteEndpoint`: the path of the delete endpoint
+         *  - `headerName`: the Warp10 header name to add for different operations
+         *
+         *  @type Backend
+         */
         backend: {
           type: Object,
           observer: '_backendChanged',
           notify: true,
         },
         /**
-          * The default backend
-          *  {
+         * The default backend
+         *  {
           *    "id": "default",
           *    "label": "Default backend",
           *    "url": "http://127.0.0.1:8080/api/v0",
@@ -86,7 +80,7 @@
           *    "deleteEndpoint": "/delete",
           *    "headerName": "X-Warp10-Token"            
           *  }
-          */
+         */
         defaultBackend: {
           type: Object,
           value: {
@@ -101,8 +95,8 @@
           },
         },
         /**
-          * The CityzenData backend, uesed for snapshot capabilities
-          *  {
+         * The CityzenData backend, uesed for snapshot capabilities
+         *  {
           *    "id": "czd",
           *    "label": "Cityzen Data Warp",
           *    "url": "https://warp.cityzendata.net/api/v0",
@@ -112,7 +106,7 @@
           *    "deleteEndpoint": "/delete",
           *    "headerName": "X-CityzenData-Token"            
           *  }
-          */
+         */
         czdBackend: {
           type: Object,
           value: {
@@ -152,15 +146,20 @@
     // ***********************************************************************
     _payloadChanged(payload) {
       this.dispatchEvent(new CustomEvent('payload-change',
-        {detail: {
-          payload: payload,
-        }}));
+        {
+          detail: {
+            payload: payload,
+          },
+        }));
     }
+
     _backendChanged(backend) {
       this.dispatchEvent(new CustomEvent('backend-change',
-        {detail: {
-          backend: backend,
-        }}));
+        {
+          detail: {
+            backend: backend,
+          },
+        }));
     }
 
     // ***********************************************************************
