@@ -208,9 +208,7 @@
         height: 500px;
       }
     </style>
-
-
-    <template is="dom-if" if="{{standalone}}">
+    <template is="dom-if" if="{{!standalone}}">
       <iron-a11y-keys target="[[_target]]" keys="e" on-keys-pressed="_hotkeyEdit"></iron-a11y-keys>
     </template>
     <iron-a11y-keys id="hotkeyUp" target="[[_target]]" keys="k up" on-keys-pressed="_hotkeyUp"></iron-a11y-keys>
@@ -231,7 +229,7 @@
           <span class="hotkey-key">h</span> Show / hide this help menu</p>
         <p>
           <span class="hotkey-key">Esc</span> Close dialogs</p>
-        <template is="dom-if" if="{{standalone}}">
+        <template is="dom-if" if="{{!standalone}}">
           <p>
             <span class="hotkey-key">e</span> Edit WarpScript</p>
         </template>
@@ -258,7 +256,7 @@
     <quantum-image-overlay id="imageOverlay" debug="[[debug]]"></quantum-image-overlay>
 
     <granite-spinner active="{{loading}}" size="200" hover></granite-spinner>
-    <template is="dom-if" if="{{standalone}}">
+    <template is="dom-if" if="{{!standalone}}">
       <div class="right">
         <paper-button id="btn_execute" class="btn btn-primary btn-lg" on-click="_hotkeyEdit">
           Edit WarpScript
