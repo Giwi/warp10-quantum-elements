@@ -152,9 +152,7 @@
         --iron-icon-height: 18px;
         --iron-icon-width: 24px;
       }
-    </style>
 
-    <style>
       .button_bar {
         @apply --layout-horizontal;
         @apply --layout-center;
@@ -548,6 +546,7 @@
             type: String,
             value: '',
             observer: '_onWarpscriptChange',
+            notify: true,
           },
           /**
            * The name of the currently selected module
@@ -708,11 +707,11 @@
 
       _isShareCodeDisabled() {
         return !!(this.loading || (this._lastSharedCode && this._lastSharedCode.snapshotId) ||
-          this._warpscriptChangedAfterExecution );
+          this._warpscriptChangedAfterExecution);
       }
 
       _isShareResponseDisabled() {
-        return !!(this.loading || (this._lastSharedResponse && this._lastSharedResponse.snapshotId) );
+        return !!(this.loading || (this._lastSharedResponse && this._lastSharedResponse.snapshotId));
       }
 
       // ************************************************************************
@@ -760,7 +759,7 @@
       // Event Listeners
       // ************************************************************************
       _handleResponse(event, response) {
-        console.log(event, response)
+        console.log(event, response);
         if (!response.stack || !(response.stack instanceof Array)) {
           return;
         }
@@ -793,8 +792,8 @@
           if (error.request.xhr.responseText.match(/<pre>\s*(.*)\s*<\/prse>/)) {
             this.errorMsg = error.request.xhr.responseText.match(/<pre>\s*(.*)\s*<\/prse>/)[1];
           } else {
-            if(!error.request.xhr.statusText || '' === error.request.xhr.statusText) {
-              this.errorMsg = 'Unable to reach ' + error.request.url
+            if (!error.request.xhr.statusText || '' === error.request.xhr.statusText) {
+              this.errorMsg = 'Unable to reach ' + error.request.url;
             } else {
               this.errorMsg = error.request.statusText;
             }
@@ -909,7 +908,10 @@
       shareCode() {
         let script = '// backend: ' + JSON.stringify(this.backend) + '\n\n' + this.warpscript;
         // eslint-disable-next-line max-len
-        this._codeToShare = `<% '${encodeURI(script).replace(/'/g, '%27').replace(/"/g, '%28').replace(/\+/g, '%2B')}' %> @orbit/snapshot/store`;
+        this._codeToShare = `<% '${encodeURI(script).
+          replace(/'/g, '%27').
+          replace(/"/g, '%28').
+          replace(/\+/g, '%2B')}' %> @orbit/snapshot/store`;
         this.$.shareCodeRequest.generateRequest();
       }
 
